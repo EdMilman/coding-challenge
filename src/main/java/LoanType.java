@@ -1,9 +1,15 @@
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+/*
+Classes representing different types of loan
+ */
 
 @EqualsAndHashCode
 abstract class LoanType {
     private String loanType = this.getClass().getName();
+    /*
+    
+     */
     boolean compare(LoanType other){
         return this.getClass().equals(other.getClass());
     }
