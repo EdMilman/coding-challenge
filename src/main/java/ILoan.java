@@ -1,3 +1,6 @@
+/**
+ * interface for loan
+ */
 interface ILoan {
     public void fund(int amount, InvestorImpl investor);
 

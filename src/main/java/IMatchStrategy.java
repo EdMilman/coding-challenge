@@ -1,5 +1,11 @@
+import com.google.inject.ImplementedBy;
+
 import java.util.List;
 
+/**
+ * Interface for strategy pattern
+ */
+@ImplementedBy(CodeChallengeStrategy.class)
 interface IMatchStrategy {
     void execute(List<InvestorImpl> investors, List<LoanImpl> loans);
 

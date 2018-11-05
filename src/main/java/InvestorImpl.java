@@ -6,6 +6,9 @@ import lombok.ToString;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * class for implementation of investor
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -26,6 +29,11 @@ public class InvestorImpl implements IInvestor {
         this.mapInvestmentAmountToLoanId = new HashMap<>();
     }
 
+    /**
+     * method to have investor invest in a particular loan
+     *
+     * @param loan loan to be invested in
+     */
     @Override
     public void invest(LoanImpl loan) {
         int amount = Math.min(loan.leftToInvest(), remaining);

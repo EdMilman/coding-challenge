@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implementation of a Loan
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -30,21 +33,39 @@ public class LoanImpl implements ILoan, Comparable<LoanImpl> {
         this.completedDate = LocalDate.parse(details[4]);
     }
 
+    /**
+     * function used for sorting by date
+     * @param o - other loan
+     * @return int
+     */
     @Override
     public int compareTo(LoanImpl o) {
         return this.completedDate.compareTo(o.completedDate);
     }
 
+    /**
+     * function showing if loan is fully funded
+     * @return boolean if loan is fully funded
+     */
     @Override
     public Boolean isFullyFunded() {
         return fundedAmount == loanAmount;
     }
 
+    /**
+     * function showing difference between total loan amount and amount invested
+     * @return int
+     */
     @Override
     public int leftToInvest() {
         return loanAmount - fundedAmount;
     }
 
+    /**
+     * adds funds to a load
+     * @param amount int - amount to be invested
+     * @param investor - investor investing in loan
+     */
     @Override
     public void fund(int amount, InvestorImpl investor) {
         this.fundedAmount += amount;
