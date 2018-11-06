@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -5,13 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class LoanImplTest {
+class LoanImplTest extends TestBase{
     private static LoanImpl loan;
     private static InvestorImpl investor;
+    private static CsvUtils csvUtils;
 
     @BeforeEach
     void setUp() {
-        loan = new LoanImpl(new String[]{"1", "100000", "FIXED", "18", "2015-01-01"});
+        csvUtils = injector.getInstance(CsvUtils.class);
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "100000", "FIXED", "18", "2015-01-01"});
     }
 
     @Test
@@ -30,16 +33,16 @@ class LoanImplTest {
 
     @Test
     void fund() {
-        loan = new LoanImpl(new String[]{"1", "100000", "FIXED", "18", "2015-01-01"});
-        investor = new InvestorImpl(new String[]{"Alice", "100000", "FIXED", "12"});
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "100000", "FIXED", "18", "2015-01-01"});
+        investor = csvUtils.getInvestorFactory().create(new String[]{"Alice", "100000", "FIXED", "12"});
         loan.fund(100000, investor);
         assertTrue(loan.isFullyFunded());
     }
 
     @Test
     void fund1() {
-        loan = new LoanImpl(new String[]{"1", "100000", "FIXED", "18", "2015-01-01"});
-        investor = new InvestorImpl(new String[]{"Alice", "50000", "FIXED", "12"});
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "100000", "FIXED", "18", "2015-01-01"});
+        investor = csvUtils.getInvestorFactory().create(new String[]{"Alice", "50000", "FIXED", "12"});
         loan.fund(50000, investor);
         assertFalse(loan.isFullyFunded());
         assertEquals(50000, loan.leftToInvest());

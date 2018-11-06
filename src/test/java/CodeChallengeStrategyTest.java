@@ -25,32 +25,32 @@ class CodeChallengeStrategyTest extends TestBase{
 
     @Test
     void findPotentialInvestors() {
-        loan = new LoanImpl(new String[]{"1", "10", "FIXED", "36", "2015-01-01"}); // loan term too long for any fixed loan investor
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "10", "FIXED", "36", "2015-01-01"}); // loan term too long for any fixed loan investor
         assertEquals(strategy.findPotentialInvestors(loan, investors), Collections.emptyList());
     }
 
     @Test
     void findPotentialInvestors1() {
-        loan = new LoanImpl(new String[]{"1", "10", "TRACKER", "45", "2015-01-01"}); // matches only Dan,20000,TRACKER,50 - checks term
-        assertEquals(strategy.findPotentialInvestors(loan, investors), List.of(new InvestorImpl(new String[]{"Dan", "20000", "TRACKER", "50"})));
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "10", "TRACKER", "45", "2015-01-01"}); // matches only Dan,20000,TRACKER,50 - checks term
+        assertEquals(strategy.findPotentialInvestors(loan, investors), List.of(csvUtils.getInvestorFactory().create(new String[]{"Dan", "20000", "TRACKER", "50"})));
     }
 
     @Test
     void findPotentialInvestors2() {
-        loan = new LoanImpl(new String[]{"1", "10", "OTHER", "36", "2015-01-01"}); // loan term does not exist
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "10", "OTHER", "36", "2015-01-01"}); // loan term does not exist
         assertEquals(strategy.findPotentialInvestors(loan, investors), Collections.emptyList());
     }
 
     @Test
     void findPotentialInvestors3() {
-        loan = new LoanImpl(new String[]{"1", "10", "TRACKER", "12", "2015-01-01"}); // matches all tracker loan applicants
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "10", "TRACKER", "12", "2015-01-01"}); // matches all tracker loan applicants
         assertEquals(strategy.findPotentialInvestors(loan, investors), List.of(
-                new InvestorImpl(new String[]{"Bob", "330000", "TRACKER", "30"}),
-                new InvestorImpl(new String[]{"Dan", "20000", "TRACKER", "50"}),
-                new InvestorImpl(new String[]{"Eve", "13000", "TRACKER", "30"}),
-                new InvestorImpl(new String[]{"Leo", "67800", "TRACKER", "30"}),
-                new InvestorImpl(new String[]{"Mark", "180", "TRACKER", "30"}),
-                new InvestorImpl(new String[]{"Nina", "10000", "TRACKER", "30"})
+                csvUtils.getInvestorFactory().create(new String[]{"Bob", "330000", "TRACKER", "30"}),
+                csvUtils.getInvestorFactory().create(new String[]{"Dan", "20000", "TRACKER", "50"}),
+                csvUtils.getInvestorFactory().create(new String[]{"Eve", "13000", "TRACKER", "30"}),
+                csvUtils.getInvestorFactory().create(new String[]{"Leo", "67800", "TRACKER", "30"}),
+                csvUtils.getInvestorFactory().create(new String[]{"Mark", "180", "TRACKER", "30"}),
+                csvUtils.getInvestorFactory().create(new String[]{"Nina", "10000", "TRACKER", "30"})
         ));
     }
 
@@ -62,7 +62,7 @@ class CodeChallengeStrategyTest extends TestBase{
 
     @Test
     void findMaxPotentialFunding2() {
-        loan = new LoanImpl(new String[]{"1", "10", "TRACKER", "12", "2015-01-01"}); // max funding for tracker loans
+        loan = csvUtils.getLoanFactory().create(new String[]{"1", "10", "TRACKER", "12", "2015-01-01"}); // max funding for tracker loans
         List<InvestorImpl> filteredInvestors = strategy.findPotentialInvestors(loan, investors);
         assertEquals(strategy.findMaxPotentialFunding(filteredInvestors), 440980);
     }

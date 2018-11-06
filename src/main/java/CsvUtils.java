@@ -1,5 +1,6 @@
 import com.google.inject.Inject;
 import com.opencsv.CSVReader;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.FileReader;
@@ -19,14 +20,16 @@ public class CsvUtils {
      * @throws IOException
      */
 
+    @Getter
     private LoanImpl.LoanFactory loanFactory;
+    @Getter
     private InvestorImpl.InvestorFactory investorFactory;
 
 
     @Inject
-    public CsvUtils(LoanImpl.LoanFactory loanFactory, InvestorImpl.InvestorFactory investorFactory) {
-        this.loanFactory = loanFactory;
-        this.investorFactory = investorFactory;
+    private CsvUtils(FactoryFactory factory) {
+        this.loanFactory = factory.getLoanFactory();
+        this.investorFactory = factory.getInvestorFactory();
     }
 
     public ArrayList<LoanImpl> readLoans(String file) throws IOException {

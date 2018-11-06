@@ -2,7 +2,6 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -13,7 +12,6 @@ import java.util.Map;
  * Implementation of a Loan
  */
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode
 public class LoanImpl implements ILoan, Comparable<LoanImpl> {
     private int loanId;
@@ -27,7 +25,7 @@ public class LoanImpl implements ILoan, Comparable<LoanImpl> {
     private Map<InvestorImpl, Integer> mapInvestorsToAmount;
 
     @Inject
-    LoanImpl(@Assisted String[] details) {
+    private LoanImpl(@Assisted String[] details) {
         this.mapInvestorsToAmount = new HashMap<>();
         this.loanId = Integer.parseInt(details[0]);
         this.loanAmount = Integer.parseInt(details[1]);
@@ -36,6 +34,9 @@ public class LoanImpl implements ILoan, Comparable<LoanImpl> {
         this.completedDate = LocalDate.parse(details[4]);
     }
 
+    /**
+     * interface for guice to create factory
+     */
     public interface LoanFactory{
         LoanImpl create(String[] details);
     }

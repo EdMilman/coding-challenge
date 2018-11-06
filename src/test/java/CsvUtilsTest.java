@@ -23,12 +23,12 @@ class CsvUtilsTest extends TestBase{
     @Test
     void readLoans() throws IOException {
         String[] loanDetails = new String[]{"1", "100000", "FIXED", "18", "2015-01-01"};
-        assertEquals(csvUtils.readLoans("loanTest.csv"), List.of(new LoanImpl(loanDetails)));
+        assertEquals(csvUtils.readLoans("loanTest.csv"), List.of(csvUtils.getLoanFactory().create(loanDetails)));
     }
 
     @Test
     void readInvestors() throws IOException {
         String[] investorDetails = new String[]{"Alice", "100", "FIXED", "12"};
-        assertEquals(csvUtils.readInvestors("investmentTest.csv"), List.of(new InvestorImpl(investorDetails)));
+        assertEquals(csvUtils.readInvestors("investmentTest.csv"), List.of(csvUtils.getInvestorFactory().create(investorDetails)));
     }
 }
