@@ -1,3 +1,4 @@
+import com.google.inject.Inject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CodeChallengeStrategyTest {
+class CodeChallengeStrategyTest extends TestBase{
 
     private static IMatchStrategy strategy;
     private static ArrayList<InvestorImpl> investors;
@@ -17,8 +18,8 @@ class CodeChallengeStrategyTest {
 
     @BeforeAll
     static void setUp() throws IOException {
-        strategy = new CodeChallengeStrategy();
-        csvUtils = new CsvUtils();
+        strategy = injector.getInstance(CodeChallengeStrategy.class);
+        csvUtils = injector.getInstance(CsvUtils.class);
         investors = csvUtils.readInvestors("investmentRequests.csv");
     }
 

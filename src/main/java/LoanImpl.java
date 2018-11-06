@@ -1,3 +1,5 @@
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,13 +26,18 @@ public class LoanImpl implements ILoan, Comparable<LoanImpl> {
     @ToString.Exclude
     private Map<InvestorImpl, Integer> mapInvestorsToAmount;
 
-    LoanImpl(String[] details) {
+    @Inject
+    LoanImpl(@Assisted String[] details) {
         this.mapInvestorsToAmount = new HashMap<>();
         this.loanId = Integer.parseInt(details[0]);
         this.loanAmount = Integer.parseInt(details[1]);
         this.term = Integer.parseInt(details[3]);
         this.type = LoanIdentifier.assignLoanType(details[2].toUpperCase());
         this.completedDate = LocalDate.parse(details[4]);
+    }
+
+    public interface LoanFactory{
+        LoanImpl create(String[] details);
     }
 
     /**

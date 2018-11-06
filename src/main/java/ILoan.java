@@ -1,10 +1,10 @@
 /**
  * interface for loan
  */
-interface ILoan {
-    public void fund(int amount, InvestorImpl investor);
+public interface ILoan {
+    void fund(int amount, InvestorImpl investor);
 
-    public int leftToInvest();
+    int leftToInvest();
 
-    public Boolean isFullyFunded();
+    Boolean isFullyFunded();
 }
